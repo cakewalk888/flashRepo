@@ -1,25 +1,33 @@
 from web3 import Web3
+from dotenv import load_dotenv
 import os
 import json
 
-# Fetch private key from environment variable
+
+
+# Fetch  environment variables
+load_dotenv()
+
 private_key = os.getenv("MMASK_PK")
+my_address = os.getenv("SEPOLIA_ADDY")
+RPC_URL = os.getenv("SEPOLIA_URL")
 
 if private_key:
-    print("Private key loaded successfully!")
+    print("Private Key loaded successfully!")
 else:
     print("Failed to load private key. Ensure it's set in the environment variables.")
 
-# Fetch wallet adress from environment variable
-my_address = os.getenv("SEPOLIA_ADDY")
-
 if my_address:
-    print("Wallet Adress successfully loaded!")
+    print("Wallet Address successfully loaded!")
 else:
-    print("Failed to load wallet address. Ensure its in the env variable.")
+    print("Failed to load wallet address. Ensure it's set in the environment variables.")
 
-# Replace with your RPC URL
-RPC_URL = "https://sepolia.infura.io/v3/08169f90a2d94267b38bbf38e07cfd8e"
+if RPC_URL:
+    print("RPC URL successfully loaded!")
+else:
+    print("Failed to load RPC URL. Ensure it's set in the environment variables.")
+
+# Connect  your RPC URL
 web3 = Web3(Web3.HTTPProvider(RPC_URL))
 
 # Check connection
