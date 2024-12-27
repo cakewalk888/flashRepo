@@ -1,0 +1,1 @@
+/data/data/com.termux/files/usr/bin/c++ -O2 -g -DNDEBUG -Xlinker --dependency-file=CMakeFiles/MyExecutable.dir/link.d CMakeFiles/MyExecutable.dir/main.cpp.o -o MyExecutable
