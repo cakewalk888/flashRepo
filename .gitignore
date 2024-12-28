@@ -142,3 +142,4 @@ build/
 .DS_Store
 Thumbs.db
 umbs.db
+node_modules/
