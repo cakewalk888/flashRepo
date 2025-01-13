@@ -1,8 +1,14 @@
+import os
+import subprocess
+
+# Check if the virtual environment is active
+if not os.getenv('VIRTUAL_ENV'):
+    subprocess.run(["source", "venv/bin/activate"], shell=True)
+
 from web3 import Web3
 from dotenv import load_dotenv
-import os
 import json
-
+import subprocess
 
 
 # Fetch  environment variables
@@ -10,7 +16,10 @@ load_dotenv()
 
 private_key = os.getenv("MMASK_PK")
 my_address = os.getenv("SEPOLIA_ADDY")
-RPC_URL = os.getenv("SEPOLIA_URL")
+RPC_URL = os.getenv("SEPOLIA_RPC")
+
+# Connect  your RPC URL
+web3 = Web3(Web3.HTTPProvider(RPC_URL))
 
 if private_key:
     print("Private Key loaded successfully!")
@@ -31,14 +40,14 @@ else:
 web3 = Web3(Web3.HTTPProvider(RPC_URL))
 
 # Check connection
-if web3.isConnected():
-    print(f"Connected to Sepolia! Current Block: {web3.eth.block_number}")
+if web3.is_connected():
+    print(f"Connected to testnet! Current Block: {web3.eth.block_number}")
 else:
     print("Failed to connect to Sepolia.")
 
 # Check your SepoliaETH balance
 balance = web3.eth.get_balance(my_address)
-print(f"Wallet Balance: {web3.fromWei(balance, 'ether')} SepoliaETH")
+print(f"Wallet Balance: {web3.from_wei(balance, 'ether')} SepoliaETH")
 
 
 
