@@ -5,7 +5,7 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
 module.exports = {
-  solidity: "0.8.18",
+  solidity: "^0.8.26",
   networks: {
     sepolia: {
       url: process.env.SEPOLIA_RPC_URL || "https://sepolia.infura.io/v3/PROJECT_ID",

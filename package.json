@@ -19,6 +19,7 @@
   "homepage": "https://github.com/cakewalk888/flashRepo#readme",
   "dependencies": {
     "@aave/core-v3": "^1.19.3",
+    "@bgd-labs/aave-address-book": "^4.8.1",
     "@openzeppelin/contracts": "^5.1.0",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "abort-controller": "^3.0.0",

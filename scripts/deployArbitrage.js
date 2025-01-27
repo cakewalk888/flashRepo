@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+const aavePoolAddress = process.env.testPoolAddressProvider
 const hre = require("hardhat");
 
 async function main() {
@@ -6,7 +9,7 @@ async function main() {
     "FlashLoanArbitrage"
   );
   const flashLoanArbitrage = await FlashLoanArbitrage.deploy(
-    "0xc4dCB5126a3AfEd129BC3668Ea19285A9f56D15D"
+    `${aavePoolAddress}`
   );
 
   await flashLoanArbitrage.deployed();
