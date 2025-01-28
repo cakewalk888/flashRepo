@@ -16,4 +16,37 @@ const fs = require('fs');
 require('dotenv').config();
 
 //load tokenlist.json file from aave-address-book
+const tokenList = JSON.parse(fs.readFileSync('tokenlist.json', 'utf8'));
+
+//lists of tokens for their respective pools
+
+const ethCore = [
+
+        "WETH", "wstETH", "WBTC", "USDC",
+        "DAI", "LINK", "AAVE", "cbETH",
+        "USDT", "rETH", "LUSD", "CRV",
+        "MKR", "SNX", "BAL", "UNI",
+        "LDO", "ENS", "ONE_INCH", "FRAX",
+        "GHO", "RPL", "sDAI", "STG", "KNC",
+        "FXS", "crvUSD", "PYUSD", "weETH",
+        "osETH", "USDe", "ETHx", "sUSDe",
+        "tBTC", "cbBTC", "USDS", "rsETH"
+
+];
+const ethPrime = [];
+const ethEtherFi = [];
+const polygon = [];
+const avalanche = [];
+const arbitrum = [];
+const optimism = [];
+const harmony = [];
+const fantom = [];
+const metis = [];
+const base = [];
+const gnosis = [];
+const scroll = [];
+const bnbChain = [];
+const zkSync = [];
+
+const sepolia = [];
 
