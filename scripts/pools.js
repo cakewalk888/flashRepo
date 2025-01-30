@@ -16,7 +16,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 //load tokenlist.json file from aave-address-book
-const tokenList = JSON.parse(fs.readFileSync('tokenlist.json', 'utf8'));
+// const tokenList = JSON.parse(fs.readFileSync('tokenlist.json', 'utf8'));
 
 //lists of tokens for their respective pools
 
@@ -33,20 +33,120 @@ const ethCore = [
         "tBTC", "cbBTC", "USDS", "rsETH"
 
 ];
-const ethPrime = [];
-const ethEtherFi = [];
-const polygon = [];
-const avalanche = [];
-const arbitrum = [];
-const optimism = [];
-const harmony = [];
-const fantom = [];
-const metis = [];
-const base = [];
-const gnosis = [];
-const scroll = [];
-const bnbChain = [];
-const zkSync = [];
 
-const sepolia = [];
+const ethPrime = [
+
+        "wstETH", "WETH", "USDS", "USDC",
+        "ezETH", "sUSDe", "GHO", "rsETH"
+
+];
+
+const ethEtherFi = [
+
+        "weETH", "USDC", "PYUSD", "FRAX"
+
+];
+const polygon = [
+
+        "DAI", "LINK", "USDC", "WBTC",
+        "WETH", "USDT", "AAVE", "WPOL",
+        "CRV", "SUSHI", "GHST", "BAL",
+        "DPI", "EURS", "jEUR", "EURA",
+        "miMATIC", "stMATIC", "MaticX",
+        "wstETH", "USDCn"
+
+];
+const avalanche = [
+
+        "DAIe", "LINKe", "USDC", "WBTCe",
+        "WETHe", "USDt", "AAVEe", "WAVAX",
+        "sAVAX", "FRAX", "MAI", "BTCb"
+
+];
+const arbitrum = [
+
+        "DAI", "LINK", "USDC", "WBTC",
+        "WETH", "USDT", "AAVE", "EURS",
+        "wstETH", "MAI", "rETH", "LUSD",
+        "USDCn", "FRAX", "ARB", "weETH",
+        "GHO"
+
+];
+const optimism = [
+
+        "DAI", "LINK", "USDC", "WBTC",
+        "WETH", "USDT", "AAVE", "jUSD",
+        "OP", "wstETH", "LUSD", "MAI",
+        "rETH", "USDCn"
+
+];
+const harmony = [
+
+        "ONE_DAI", "LINK", "ONE_USDC",
+        "ONE_WBTC", "ONE_ETH", "ONE_USDT",
+        "ONE_AAVE", "WONE"
+
+];
+const fantom = [
+
+        "DAI", "LINK", "USDC", "BTC",
+        "ETH", "fUSDT", "AAVE", "WFTM",
+        "CRV", "SUSHI"
+
+];
+const metis = [
+
+        "mDAI", "Metis", "mUSDC",
+        "mUSDT", "WETH"
+
+];
+const base = [
+
+        "WETH", "cbETH", "USDbC",
+        "wstETH", "USDC", "weETH",
+        "cbBTC"
+
+];
+const gnosis = [
+
+        "WETH", "wstETH", "GNO", "USDC",
+        "WXDAI", "EURe", "sDAI", "USDCe"
+
+];
+const scroll = [
+
+        "WETH", "USDC", "wstETH", "weETH"
+
+];
+const bnbChain = [
+
+        "Cake", "WBNB", "BTCB", "ETH",
+        "USDC", "USDT", "FDUSD", "wstETH"
+
+];
+const zkSync = [
+
+        "USDC", "USDT", "WETH", "wstETH",
+        "Zk"
+
+];
+
+const sepolia = [
+
+        "DAI", "LINK", "USDC", "WBTC",
+        "WETH", "USDT", "AAVE", "EURS",
+        "GHO"
+
+];
+
+let pools = [
+
+        ethCore, ethPrime, ethEtherFi, polygon,
+        avalanche, arbitrum, optimism, harmony,
+        fantom, metis, base, gnosis, scroll,
+        bnbChain, zkSync, sepolia
+
+];
+
+console.log(pools);
 
