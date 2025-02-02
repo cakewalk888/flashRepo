@@ -20,14 +20,22 @@ require('dotenv').config();
 
 //load tokenlist.json file from address book
 const tokenListPath = path.join(__dirname, '../node_modules/@bgd-labs/aave-address-book/tokenlist.json');
-const tokens = JSON.parse(fs.readFileSync(tokenListPath, 'utf-8'));
-//console.log(tokens);
-tokens.forEach(token => {
+const tokensList = JSON.parse(fs.readFileSync(tokenListPath, 'utf-8'));
 
-console.log(token.symbol);
+/*  This will show you the tokenlist.json in aave-address-book
+    for selected symbol and it will show contract address, chain id, and more for selected symbol
 
-});
+tokensList.tokens.forEach(token => {
+     if (token.symbol == "ETH"){
+       console.log(token);
+     };
+}); */
+
 //lists of tokens for their respective pools
+
+/* ( Pool address is accessed by doing
+    " AaveV3Ethereum.POOL_ADDRESS_PROVIDER "
+   or some-other-pool.POOL_ADDRESS_PROVIDER ) */
 
 let ethCore = [
 
@@ -155,5 +163,8 @@ let pools = [
 
 ];
 
-//console.log(pools);
+module.exports = {
 
+   pools: pools
+
+};
