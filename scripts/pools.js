@@ -13,8 +13,8 @@ const { AaveV3Ethereum, AaveV3EtherFi,
 const aaveAddressBook = require('@bgd-labs/aave-address-book');
 
 //to see the Variables and access their getters
-console.log(aaveAddressBook);
-console.log(aaveAddressBook.AaveV3Ethereum);
+//console.log(aaveAddressBook);
+//console.log(aaveAddressBook.AaveV3Ethereum);
 
 const fs = require('fs'); 
 const path = require('path');
