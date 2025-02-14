@@ -18,7 +18,7 @@ const uniswapTokens = require ('@uniswap/token-lists');
 
 let provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC);
 
-async function checkRPC() {
+/*async function checkRPC() {
     try {
         const blockNumber = await provider.getBlockNumber();
         console.log("Latest Block:", blockNumber);
@@ -27,7 +27,7 @@ async function checkRPC() {
     }
 }
 
-checkRPC();
+checkRPC();*/
 
 // Uniswap Chain To Addresses Access
 const chainId = new Object();
@@ -52,31 +52,30 @@ const quoterContract = new ethers.Contract(
 QUOTER_ADDRESS, QUOTER_ABI, provider
 );
 
-// Token Addresses (Uniswap)
+// Fetch Token Addresses + Symbol (Uniswap)
+const sepoliaTokens = pools[15];
+
+let sepoliaAddresses = {}; // Obj to store the result
 
 async function findSepoliaTokenAddresses(sepoliaTokens) {
     try {
         // Fetch Uniswap token list dynamically
-        const response = await fetch('https://gateway.ipfs.io/ipns/tokens.uniswap.org');
+        const response = await fetch('https://tokens.uniswap.org');
         const data = await response.json();
         const tokenList = data.tokens; // Extract token list array
 
-        // Loop through Sepolia tokens and find matching tokens in Uniswap list
-        sepoliaTokens.forEach((symbol) => {
+        // Fill the global object with token addresses
+        sepoliaTokens.forEach(symbol => {
             const token = tokenList.find(t => t.symbol === symbol);
-            if (token) {
-                console.log(`Token: ${symbol}, Address: ${token.address}`);
-            } else {
-                console.log(`Token: ${symbol} not found in Uniswap Token List`);
-            }
+            sepoliaAddresses[symbol] = token ? token.address : 'Not found';
         });
+        console.log("Token addresses stored successfully!", sepoliaAddresses);
     } catch (error) {
         console.error('Error fetching token list:', error);
     }
 }
 
-const sepoliaTokens = pools[15]; //imported from pools.js
-findSepoliaTokenAddresses(sepoliaTokens);
-
-
-
+// Example usage
+findSepoliaTokenAddresses(sepoliaTokens).then(tokenData => {
+console.log(sepoliaAddresses.WETH); // Example: Directly get WETH address
+});;
