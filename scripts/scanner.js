@@ -69,6 +69,7 @@ async function findSepoliaTokenAddresses(sepoliaTokens) {
             const token = tokenList.find(t => t.symbol === symbol);
             sepoliaAddresses[symbol] = token ? token.address : 'Not found';
         });
+
         console.log("Token addresses stored successfully!", sepoliaAddresses);
     } catch (error) {
         console.error('Error fetching token list:', error);
@@ -78,4 +79,25 @@ async function findSepoliaTokenAddresses(sepoliaTokens) {
 // Example usage
 findSepoliaTokenAddresses(sepoliaTokens).then(tokenData => {
 console.log(sepoliaAddresses.WETH); // Example: Directly get WETH address
+});;
+
+//Fetch UniswapV3 price for a token against all other tokens for that pool
+
+const FEE_TIER = 3000; // 0.3% fee tier for UniswapV3
+
+findSepoliaTokemAddresses(SepoliaTokens).then(tokenData => {
+
+    async function
+    getUniswapPrice(tokenIn, TokenOut) {
+       try {
+           const amountIn = 
+    ether.utils.parseUnits("1", 18); // 1 Token
+
+           const amountOut = await
+    quoterContract.quoteExactInputSingle();
+
+
+  };
+};
+
 });;
