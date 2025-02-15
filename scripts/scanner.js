@@ -3,7 +3,7 @@
 require('dotenv').config();
 const { pools } = require('./pools');
 const axios = require('axios');
-const { ethers } = require('ethers');
+const { ethers, parseUnits, formatUnits } = require('ethers');
 const { Pool, Route, Trade, TickMath,
         SwapQuoter } = require('@uniswap/v3-sdk');
 const { Token, CurrencyAmount, TradeType }
@@ -13,7 +13,8 @@ const { TokenList } = require('@uniswap/token-lists');
 const uniswapCore = require('@uniswap/sdk-core');
 const uniswapV3 = require('@uniswap/v3-sdk');
 const uniswapTokens = require ('@uniswap/token-lists');
-
+console.log("Ethers object:", ethers);
+console.log("Ethers utils:", ethers.utils);
 //access RPC URL. I used metamask developer (infura)
 
 let provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC);
@@ -85,19 +86,85 @@ console.log(sepoliaAddresses.WETH); // Example: Directly get WETH address
 
 const FEE_TIER = 3000; // 0.3% fee tier for UniswapV3
 
-findSepoliaTokemAddresses(SepoliaTokens).then(tokenData => {
+findSepoliaTokenAddresses(sepoliaTokens).then(tokenData => {
 
     async function
-    getUniswapPrice(tokenIn, TokenOut) {
+    getUniswapPrice(tokenIn, tokenOut) {
        try {
-           const amountIn = 
-    ether.utils.parseUnits("1", 18); // 1 Token
-
+           const amountIn = parseUnits("1", 18); // 1 Token
            const amountOut = await
-    quoterContract.quoteExactInputSingle();
+    quoterContract.quoteExactInputSingle(
+               tokenIn,
+               tokenOut,
+               FEE_TIER,
+               amountIn,
+               0
+           );
+
+           return
+    parseFloat(formatUnits(amountOut, 18)); // Convert from wei
+        } catch (error) {
+           console.error(`Error fetching Uniswap price for ${tokenIn} -> ${tokenOut}:`, error);
+           return null
+      }
+
+   };
 
 
-  };
-};
 
-});;
+// Fetch price from another DEX (1inch API)
+async function getOtherDexPrice(tokenIn, tokenOut) {
+    try {
+        const response = await axios.get(
+            `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${tokenIn}&toTokenAddress=${tokenOut}&amount=1000000000000000000`
+        );
+        return parseFloat(response.data.toTokenAmount) / 1e18; // Convert from wei
+    } catch (error) {
+        console.error(`Error fetching price from 1inch for ${tokenIn} -> ${tokenOut}:`, error);
+        return null;
+    }
+}
+
+// Compare prices for all tokens against each other
+async function comparePrices(symbols) {
+    let disparities = [];
+
+    for (const symbolIn of symbols) {
+        for (const symbolOut of symbols) {
+            if (symbolIn === symbolOut) continue; // Skip same-token comparisons
+
+            const tokenIn = sepoliaAddresses[symbolIn];
+            const tokenOut = sepoliaAddresses[symbolOut];
+
+            if (!tokenIn || !tokenOut) {
+                console.warn(`Skipping pair ${symbolIn}/${symbolOut} - missing token address.`);
+                continue;
+            }
+
+            // Fetch prices
+            const uniPrice = await getUniswapPrice(tokenIn, tokenOut);
+            const otherDexPrice = await getOtherDexPrice(tokenIn, tokenOut);
+
+            if (uniPrice && otherDexPrice) {
+                const disparity = ((otherDexPrice - uniPrice) / uniPrice) * 100;
+                disparities.push({
+                    pair: `${symbolIn}/${symbolOut}`,
+                    uniswap: uniPrice.toFixed(6),
+                    otherDex: otherDexPrice.toFixed(6),
+                    disparity: `${disparity.toFixed(2)}%`
+                });
+            }
+        }
+    }
+
+    return disparities;
+}
+
+// Run the comparison for all tokens
+(async () => {
+    const tokens = Object.keys(sepoliaAddresses);
+    const results = await comparePrices(tokens);
+    console.table(results);
+})();
+
+});; // findSepoliaTokenAddresses() close
